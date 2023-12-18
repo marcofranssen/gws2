@@ -18,9 +18,10 @@ install: ~/.cargo/bin/gws ## Install gws into ~/.cargo/bin/gws
 
 ##@ Development:
 
-.PHONY: fmt
-fmt: ## Format the code
+.PHONY: check
+check: ## Format the code
 	@cargo fmt
+	@cargo clippy -- -D warnings
 
 .PHONY: test
 test: ## Run the tests

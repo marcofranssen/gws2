@@ -32,8 +32,8 @@ fn update_creates_repos() -> Result<(), Error> {
     in_example_workspace(|working_dir, workspace: Workspace| {
         let command: Update = Update {};
 
-        assert_eq!(false, working_dir.join("missing_repository").exists());
-        assert_eq!(false, working_dir.join("missing_repository_2").exists());
+        assert!(!working_dir.join("missing_repository").exists());
+        assert!(!working_dir.join("missing_repository_2").exists());
         command
             .run(working_dir, &workspace, &Palette::default())
             .expect("Update command failed");
@@ -64,7 +64,7 @@ fn update_works_with_public_https() -> Result<(), Error> {
             .expect("Update command failed");
 
         assert_eq!(
-            Repository::open(working_dir.join(&repo_path))
+            Repository::open(working_dir.join(repo_path))
                 .expect("Failed to open repo")
                 .remotes()
                 .expect("Failed to get remotes")
@@ -100,7 +100,7 @@ fn update_works_with_ssh() -> Result<(), Error> {
                 .expect("Update command failed");
 
             assert_eq!(
-                Repository::open(working_dir.join(&repo_path))
+                Repository::open(working_dir.join(repo_path))
                     .expect("Failed to open repo")
                     .remotes()
                     .expect("Failed to get remotes")

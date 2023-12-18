@@ -14,10 +14,10 @@ use self::ConfigError::SyntaxError;
 impl PartialEq for ConfigError {
     fn eq(&self, rhs: &Self) -> bool {
         match (self, rhs) {
-            (&InvalidConfig(ref a), &InvalidConfig(ref b)) => a == b,
-            (&InternalError(ref a), &InternalError(ref b)) => a == b,
+            (InvalidConfig(a), InvalidConfig(b)) => a == b,
+            (InternalError(a), InternalError(b)) => a == b,
             (&OpenFile(_), &OpenFile(_)) => false,
-            (&SyntaxError(ref a), &SyntaxError(ref b)) => a == b,
+            (SyntaxError(a), SyntaxError(b)) => a == b,
             (_, _) => false,
         }
     }

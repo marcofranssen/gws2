@@ -125,7 +125,7 @@ mod tests {
             repo_exists: Colour::Fixed(10).normal(),
         };
 
-        let config = read_config_toml(&config_content)?;
+        let config = read_config_toml(config_content)?;
         assert_eq!(config.palette(), Ok(Some(expected)));
 
         Ok(())

@@ -140,7 +140,7 @@ fn run_test(
                 if branch_status.name == "master" || branch_status.name == "master2" {
                     assert_eq!(branch_status.fast_forwarded, should_ff);
                 } else {
-                    assert_eq!(branch_status.fast_forwarded, false);
+                    assert!(!branch_status.fast_forwarded);
                 }
             }
         }
@@ -191,8 +191,7 @@ fn ff_produces_correct_data_structure() -> Result<(), Error> {
 
         let status_report: Vec<Result<RepositoryStatus, gws::commands::error::Error>> = command
             .make_report(working_dir, &workspace)
-            .into_iter()
-            .map(|(_, status)| status)
+            .into_values()
             .collect();
 
         assert_eq!(
@@ -363,8 +362,7 @@ fn ff_produces_correct_data_structure() -> Result<(), Error> {
         let second_status_report: Vec<Result<RepositoryStatus, gws::commands::error::Error>> =
             command
                 .make_report(working_dir, &workspace)
-                .into_iter()
-                .map(|(_, status)| status)
+                .into_values()
                 .collect();
 
         assert_eq!(

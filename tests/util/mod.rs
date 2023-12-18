@@ -100,7 +100,7 @@ fn add_commit_to_repo(
         .iter()
         .map(|&o| repo.find_commit(*o).unwrap())
         .collect();
-    let parent_commit_refs: Vec<&git2::Commit> = parent_commits.iter().map(|o| o).collect();
+    let parent_commit_refs: Vec<&git2::Commit> = parent_commits.iter().collect();
 
     let readme_path = Path::new("README.md");
     write(
@@ -120,7 +120,7 @@ fn add_commit_to_repo(
         &sig,
         msg,
         &tree,
-        &parent_commit_refs.as_slice(),
+        parent_commit_refs.as_slice(),
     )?;
     repo.reset(
         repo.head()?.peel_to_commit()?.as_object(),
@@ -166,36 +166,36 @@ pub fn make_example_workspace(meta_dir: &Path, workspace_dir: &Path) -> Result<(
     make_project_no_upstream(workspace_dir.join("no_upstream").as_path(), origin_path)?;
 
     make_project_new_commit_local(
-        &join_all(workspace_dir, &["new_commit", "local"]),
+        &join_all(workspace_dir, ["new_commit", "local"]),
         origin_path,
         ahead_path,
     )?;
 
     make_project_new_commit_remote(
-        &join_all(workspace_dir, &["new_commit", "remote"]),
+        &join_all(workspace_dir, ["new_commit", "remote"]),
         origin_path,
         ahead_path,
     )?;
 
     make_project_new_commit_unfetched_remote(
-        &join_all(workspace_dir, &["new_commit", "unfetched_remote"]),
+        &join_all(workspace_dir, ["new_commit", "unfetched_remote"]),
         origin_path,
         ahead_path,
     )?;
 
     make_project_new_commit_diverged(
-        &join_all(workspace_dir, &["new_commit", "diverged"]),
+        &join_all(workspace_dir, ["new_commit", "diverged"]),
         ahead_path,
     )?;
 
     make_project_new_files(
-        &join_all(workspace_dir, &["changes", "new_files"]),
+        &join_all(workspace_dir, ["changes", "new_files"]),
         origin_path,
         ahead_path,
     )?;
 
     make_project_changed_files(
-        &join_all(workspace_dir, &["changes", "changed_files"]),
+        &join_all(workspace_dir, ["changes", "changed_files"]),
         origin_path,
         ahead_path,
     )?;
@@ -257,9 +257,7 @@ fn add_master2_branch_with_upstream<'repo>(
     add_branch_with_upstream(repo, "master2", target_ref, target_type, upstream)
 }
 
-fn add_default_master2_branch<'repo>(
-    repo: &'repo git2::Repository,
-) -> Result<git2::Branch<'repo>, Error> {
+fn add_default_master2_branch(repo: &git2::Repository) -> Result<git2::Branch<'_>, Error> {
     add_master2_branch(repo, "ahead/master", git2::BranchType::Remote)
 }
 
@@ -362,7 +360,7 @@ fn make_project_new_files(
     ahead_path: &Path,
 ) -> Result<git2::Repository, Error> {
     let repo = git2::Repository::clone(origin_path.to_str().unwrap(), path)?;
-    write(path.join("foo.txt").as_path(), &[])?;
+    write(path.join("foo.txt").as_path(), [])?;
     add_ahead_remote(&repo, ahead_path)?;
     add_default_master2_branch(&repo)?;
     Ok(repo)
@@ -415,5 +413,5 @@ pub fn in_example_workspace<T>(test: fn(&Path, Workspace) -> Result<T, Error>) -
     make_example_workspace(&meta_dir, &workspace_dir)?;
 
     let workspace = read_workspace_file(workspace_dir.join(".projects.gws")).unwrap();
-    Ok(test(&workspace_dir, workspace)?)
+    test(&workspace_dir, workspace)
 }

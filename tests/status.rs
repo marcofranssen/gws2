@@ -33,8 +33,7 @@ fn status_produces_correct_data_structure() -> Result<(), util::Error> {
 
         let project_stati: Vec<Result<RepositoryStatus, Error>> = command
             .make_report(working_dir, &workspace)
-            .into_iter()
-            .map(|(_, s)| s)
+            .into_values()
             .collect();
 
         assert_eq!(
@@ -216,8 +215,7 @@ fn status_ignores_clean_repos_with_only_changes() -> Result<(), util::Error> {
 
         let project_stati: Vec<Result<RepositoryStatus, Error>> = command
             .make_report(working_dir, &workspace)
-            .into_iter()
-            .map(|(_, s)| s)
+            .into_values()
             .collect();
 
         assert_eq!(

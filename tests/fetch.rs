@@ -90,9 +90,9 @@ fn fetch_reports_updates() -> Result<(), Error> {
                 let project_status = project_status.unwrap();
                 for branch_status in project_status {
                     if branch_status.name == "master" || branch_status.name == "master2" {
-                        assert_eq!(branch_status.upstream_fetched, true);
+                        assert!(branch_status.upstream_fetched);
                     } else {
-                        assert_eq!(branch_status.upstream_fetched, false);
+                        assert!(!branch_status.upstream_fetched);
                     }
                 }
             }
@@ -104,7 +104,7 @@ fn fetch_reports_updates() -> Result<(), Error> {
             if project.path == project_path {
                 let project_status = project_status.unwrap();
                 for branch_status in project_status {
-                    assert_eq!(branch_status.upstream_fetched, false);
+                    assert!(!branch_status.upstream_fetched);
                 }
             }
         }
@@ -132,9 +132,9 @@ fn fetch_fetches_all_projects_if_none_are_named() -> Result<(), Error> {
                 let project_status = project_status.unwrap();
                 for branch_status in project_status {
                     if branch_status.name == "master" || branch_status.name == "master2" {
-                        assert_eq!(branch_status.upstream_fetched, true);
+                        assert!(branch_status.upstream_fetched);
                     } else {
-                        assert_eq!(branch_status.upstream_fetched, false);
+                        assert!(!branch_status.upstream_fetched);
                     }
                 }
             }
@@ -170,7 +170,7 @@ fn fetch_fetches_only_named_projects_if_any_are_named() -> Result<(), Error> {
                     if branch_status.name == "master" || branch_status.name == "master2" {
                         assert_eq!(branch_status.upstream_fetched, should_fetch);
                     } else {
-                        assert_eq!(branch_status.upstream_fetched, false);
+                        assert!(!branch_status.upstream_fetched);
                     }
                 }
             }

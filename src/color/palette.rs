@@ -14,7 +14,7 @@ pub struct Palette {
 }
 
 impl Palette {
-    pub fn default() -> Palette {
+    pub fn gws() -> Palette {
         Palette {
             branch: Colour::Fixed(13).normal(),
             clean: Colour::Fixed(10).normal(),

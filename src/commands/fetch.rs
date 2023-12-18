@@ -15,9 +15,9 @@ struct FetchedProject {
     pub updated_branch_names: BTreeSet<String>,
 }
 
-fn do_fetch_remote<'repo>(
+fn do_fetch_remote(
     project: &Project,
-    repo: &'repo git2::Repository,
+    repo: &git2::Repository,
     remote: &mut git2::Remote,
 ) -> Result<BTreeSet<String>, Error> {
     let heads_before = project.current_upstream_heads(repo)?;

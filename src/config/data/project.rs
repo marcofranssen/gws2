@@ -79,7 +79,7 @@ mod tests {
                 ],
             }
             .remotes(),
-            vec![
+            [
                 Remote {
                     name: "origin".to_string(),
                     url: "git@github.com:foo/boo.git".to_string(),
@@ -91,7 +91,7 @@ mod tests {
                 Remote {
                     name: "upstream".to_string(),
                     url: "testurl".to_string(),
-                },
+                }
             ]
             .iter()
             .collect::<Vec<&Remote>>()

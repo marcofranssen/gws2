@@ -25,7 +25,7 @@ where
     )?;
 
     let workspace = read_workspace_file(workspace_dir.join(".projects.gws")).unwrap();
-    Ok(test(&workspace_dir, workspace)?)
+    test(&workspace_dir, workspace)
 }
 
 pub fn with_bundled_ssh_key_in_agent<T, F>(

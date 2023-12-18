@@ -87,7 +87,7 @@ fn find_config_file(matches: &ArgMatches) -> Option<PathBuf> {
 
 fn run_gws(matches: ArgMatches) -> Result<i32, RunError> {
     let config: Option<UserConfig> = match find_config_file(&matches) {
-        Some(config_path) => Some(read_config_file(&config_path)?),
+        Some(config_path) => Some(read_config_file(config_path)?),
         None => None,
     };
 
@@ -95,7 +95,7 @@ fn run_gws(matches: ArgMatches) -> Result<i32, RunError> {
         Some(conf) => conf.palette()?,
         None => None,
     }
-    .unwrap_or_else(Palette::default);
+    .unwrap_or_else(Palette::gws);
 
     let subcommand: Command = match &matches.subcommand {
         None => super::status::make_cli_command(&matches),

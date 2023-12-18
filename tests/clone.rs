@@ -34,12 +34,12 @@ fn clone_creates_repo() -> Result<(), Error> {
             projects: hash_set(vec!["missing_repository".to_string()]),
         };
 
-        assert_eq!(false, working_dir.join("missing_repository").exists());
+        assert!(!working_dir.join("missing_repository").exists());
         command
             .run(working_dir, &workspace, &Palette::default())
             .expect("Clone command failed");
         assert!(working_dir.join("missing_repository").exists());
-        assert_eq!(false, working_dir.join("missing_repository_2").exists());
+        assert!(!working_dir.join("missing_repository_2").exists());
 
         Ok(())
     })
@@ -55,8 +55,8 @@ fn clone_supports_multiple_arguments() -> Result<(), Error> {
             ]),
         };
 
-        assert_eq!(false, working_dir.join("missing_repository").exists());
-        assert_eq!(false, working_dir.join("missing_repository_2").exists());
+        assert!(!working_dir.join("missing_repository").exists());
+        assert!(!working_dir.join("missing_repository_2").exists());
         command
             .run(working_dir, &workspace, &Palette::default())
             .expect("Clone command failed");
@@ -87,7 +87,7 @@ fn clone_creates_extra_remotes() -> Result<(), Error> {
             .expect("Clone command failed");
 
         assert_eq!(
-            Repository::open(working_dir.join(&repo_path))
+            Repository::open(working_dir.join(repo_path))
                 .expect("Failed to open repo")
                 .remotes()
                 .expect("Failed to get remotes")
@@ -123,7 +123,7 @@ fn clone_works_with_public_https() -> Result<(), Error> {
             .expect("Clone command failed");
 
         assert_eq!(
-            Repository::open(working_dir.join(&repo_path))
+            Repository::open(working_dir.join(repo_path))
                 .expect("Failed to open repo")
                 .remotes()
                 .expect("Failed to get remotes")
@@ -161,7 +161,7 @@ fn clone_works_with_ssh() -> Result<(), Error> {
                 .expect("Clone command failed");
 
             assert_eq!(
-                Repository::open(working_dir.join(&repo_path))
+                Repository::open(working_dir.join(repo_path))
                     .expect("Failed to open repo")
                     .remotes()
                     .expect("Failed to get remotes")

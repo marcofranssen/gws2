@@ -42,8 +42,8 @@ pub trait RepositoryCommand {
         let reports = self.make_report_and_maybe_print(working_dir, workspace, Some(palette));
 
         let exit_code = reports
-            .iter()
-            .map(|(_, project_result)| match project_result {
+            .values()
+            .map(|project_result| match project_result {
                 Ok(_) => exit_codes::OK,
                 Err(Error::RepositoryMissing) => exit_codes::OK,
                 Err(_) => exit_codes::INTERNAL_ERROR,
